@@ -30,46 +30,95 @@ Game::Game( MainWindow& wnd )
 
 void Game::Go()
 {
+	// Animation is actally made up of frames
 	gfx.BeginFrame();	
-	UpdateModel();
-	ComposeFrame();
+	UpdateModel();	// Update the logic inside
+	ComposeFrame(); // Draw the new frame, contains the drawing codes
 	gfx.EndFrame();
 }
 
+// Only game logic here
 void Game::UpdateModel()
 {
-}
-
-void Game::ComposeFrame()
-{ 
 	if (wnd.kbd.KeyIsPressed(VK_RIGHT))
 	{
-		x += 3;
+		if (inhibitRight)
+		{
+			
+		}
+		else
+		{
+			vx += 1;
+			inhibitRight = true;
+		}
+	}
+	else
+	{
+		inhibitRight = false;
 	}
 
 	if (wnd.kbd.KeyIsPressed(VK_LEFT))
 	{
-		x -= 3;
+		if (inhibitLeft)
+		{
+			
+		}
+		else
+		{
+			vx -= 1;
+			inhibitLeft = true;
+		}
+	}
+	else
+	{
+		inhibitLeft = false;
 	}
 
 	if (wnd.kbd.KeyIsPressed(VK_DOWN))
 	{
-		y += 3;
+		if (inhibitDown)
+		{
+
+		}
+		else
+		{
+			vy += 1;
+			inhibitDown = true;
+		}
+	}
+	else
+	{
+		inhibitDown = false;
 	}
 
 	if (wnd.kbd.KeyIsPressed(VK_UP))
 	{
-		y -= 3;
+		if (inhibitUp)
+		{
+			vy -= 1;
+			inhibitUp = true;
+		}
+	}
+	else
+	{
+		inhibitUp = false;
 	}
 
-	int gb = 255;
+	x += vx;
+	y += vy;
 
 	if (wnd.kbd.KeyIsPressed(VK_CONTROL))
 	{
 		gb = 0;
 	}
 
-	if (wnd.kbd.KeyIsPressed(VK_SHIFT))
+	shapeIsChanged = wnd.kbd.KeyIsPressed(VK_SHIFT);
+}
+
+void Game::ComposeFrame()
+{ 
+	
+	if (shapeIsChanged)
 	{
 		gfx.PutPixel(-5 + x, -5 + y, 255, gb, gb);
 		gfx.PutPixel(-5 + x, -4 + y, 255, gb, gb);

@@ -43,6 +43,16 @@ private:
 
 	int x = 400; 
 	int y = 300;
+	int gb = 255; // rgb's gb
+	int vx = 0;	// velocity in x direction
+	int vy = 0; // velocity in y direction
+	// inhibit vars are used to prevent users keep pressing the same direction and cause the 
+	// velocity to become too large.
+	bool shapeIsChanged = false;
+	bool inhibitUp = false;
+	bool inhibitDown = false;
+	bool inhibitLeft = false;
+	bool inhibitRight = false;
 	/********************************/
 	/*  User Variables              */
 	/********************************/
